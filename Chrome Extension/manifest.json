@@ -1,0 +1,54 @@
+{
+    "manifest_version": 3,
+    "name": "Amazon Review Sentiment Analyzer",
+    "version": "1.0",
+    "description": "Runs a quantized ONNX model to analyze the sentiment of Amazon reviews.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://www.amazon.com/*",
+        "https://www.amazon.in/*",
+        "https://www.amazon.co.uk/*",
+        "https://www.amazon.ca/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.amazon.com/*",
+                "https://www.amazon.in/*",
+                "https://www.amazon.co.uk/*",
+                "https://www.amazon.ca/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "runs_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "ort.min.js",
+                "transformers.min.js",
+                "chart.umd.js"
+            ],
+            "matches": [
+                "https://www.amazon.com/*",
+                "https://www.amazon.in/*",
+                "https://www.amazon.co.uk/*",
+                "https://www.amazon.ca/*"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    }
+}
